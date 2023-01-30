@@ -63,9 +63,16 @@
                 @endcan
 
                 <li>
+                    <a href="/transfer-material" class="waves-effect">
+                        <i class="bx bx-list-check"></i>
+                        <span key="t-b-transfer-material">Transfer Material</span>
+                    </a>
+                </li>
+
+                <li>
                     <a href="/biological-assets" class="waves-effect">
                         <i class="bx bx-list-check"></i>
-                        <span key="t-b-assets">Biological Assets</span>
+                        <span key="t-b-waste-materials">Waste Material</span>
                     </a>
                 </li>
 
