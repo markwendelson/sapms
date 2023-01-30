@@ -80,7 +80,7 @@
                                                 <div class="input-group" id="datepicker2">
                                                     <input type="text" class="form-control" name="date_acquired" id="date_acquired" placeholder="Select date"
                                                         data-date-format="yyyy-mm-dd" data-date-container='#datepicker2' data-provide="datepicker"
-                                                        data-date-autoclose="true" required>
+                                                        data-date-autoclose="true">
 
                                                     <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
                                                 </div><!-- input-group -->
@@ -113,7 +113,7 @@
                                         <div class="mb-3 row">
                                             <label for="price" class="col-md-4 col-form-label">Price</label>
                                             <div class="col-md-8">
-                                                <input class="form-control" type="text" value="{{old('price')}}" id="price" name="price" required min="0">
+                                                <input class="form-control" type="text" value="{{old('price')}}" id="price" name="price" min="0">
                                             </div>
                                         </div>
                                     </div>
@@ -121,7 +121,7 @@
                                         <div class="mb-3 row">
                                             <label for="price" class="col-md-4 col-form-label">Useful Life</label>
                                             <div class="col-md-8">
-                                                <input class="form-control" type="text" value="{{old('useful_life')}}" id="useful_life" name="useful_life" required>
+                                                <input class="form-control" type="text" value="{{old('useful_life')}}" id="useful_life" name="useful_life">
                                             </div>
                                         </div>
                                     </div>
