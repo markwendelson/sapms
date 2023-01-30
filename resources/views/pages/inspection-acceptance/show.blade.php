@@ -37,6 +37,14 @@
                 <a href="javascript:void(0)" onclick="printPage('{{route('reports.iar', ['id' => $iar->id])}}');" class="btn btn-primary waves-effect waves-light">
                     <i class="bx bx-printer font-size-16 align-middle me-2"></i> Print I.A.R
                 </a>
+
+                <a href="javascript:void(0)" onclick="printPage('{{route('reports.par', ['id' => $iar->id])}}');" class="btn btn-primary waves-effect waves-light">
+                    <i class="bx bx-printer font-size-16 align-middle me-2"></i> Print P.A.R
+                </a>
+
+                <a href="javascript:void(0)" onclick="printPage('{{route('reports.ics', ['id' => $iar->id])}}');" class="btn btn-primary waves-effect waves-light">
+                    <i class="bx bx-printer font-size-16 align-middle me-2"></i> Print I.C.S
+                </a>
             </div>
 
         </div>

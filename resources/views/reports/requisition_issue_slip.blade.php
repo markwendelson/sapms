@@ -220,31 +220,36 @@
                            <th width="15%">Remarks</th>
                         </thead>
                         <tbody>
-                            @php $row = 1; @endphp
+                            @php
+                                $row = 1;
+                                $limit = 30;
+                            @endphp
                             @foreach ($ris_details as $item)
                                 <tr class="text-center">
                                     <td >{{$row}}</td>
-                                    <td>{</td>
+                                    <td>{{$item->unit_of_measure}}</td>
                                     <td>{!! $item->item_name.' - '.nl2br($item->item_description) !!}</td>
                                     <td>{{(int)$item->quantity}}</td>
                                 </tr>
                                 @php $row++;@endphp
                             @endforeach
                             <tr>
-                                <td></td>
-                                <td></td>
-                                <td>Fuel Consumption from February 22-28,2022.</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
                                 <td colspan = "8" class="text-center">
                                  ********** NOTHING FOLLOWS **********
                                 </td>
                             </tr>
+                            @for ($i = $row; $i <= $limit; $i++)
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            @endfor
                             <tr>
                                 <td colspan = "8">
                                  <b>Purpose:</b> {{$ris->purpose}}

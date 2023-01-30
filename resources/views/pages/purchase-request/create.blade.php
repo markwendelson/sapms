@@ -196,9 +196,9 @@
 <script src="{{asset('libs/bootstrap-datepicker/js/bootstrap-datepicker.min.js')}}"></script>
 <script>
 
-    var rowCount = $('table tbody tr').length;
+    var rowCount = {{count($pr_items)}};
 
-    if(rowCount = 0) {
+    if(rowCount == 0) {
         $('.btn-save').attr("disabled", true);
     }
 
@@ -276,8 +276,6 @@
             url: `{{route('purchase-request.add')}}`,
             data: params,
             success: function(res) {
-                // window.location.reload()
-                console.log(res)
 
                 var items = res.pr_items
                 var markup = '';

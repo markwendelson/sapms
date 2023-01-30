@@ -11,9 +11,6 @@
                 <a href="{{route('item.edit', $item->id)}}" class="btn btn-primary waves-effect waves-light">
                     <i class="bx bx-pencil font-size-16 align-middle me-2"></i> Edit
                 </a>
-                <a href="#" class="btn btn-primary waves-effect waves-light">
-                    <i class="bx bx-printer font-size-16 align-middle me-2"></i> Print Stock Card
-                </a>
                 <a href="{{route('reports.property-card', ['id' => $item->id])}}" class="btn btn-primary waves-effect waves-light">
                     <i class="bx bx-printer font-size-16 align-middle me-2"></i> Print Property Card
                 </a>

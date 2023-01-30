@@ -53,8 +53,9 @@ class ReportController extends Controller
         return view('reports.property_card',compact('property'));
     }
 
-    public function property_acknowledge_receipt(){
+    public function property_acknowledge_receipt(Request $request){
         $property = DB::table('items')
+        // ->where('id', $request->id)
         ->get();
         return view('reports.property_acknowledge_receipt',compact('property'));
     }
@@ -65,12 +66,13 @@ class ReportController extends Controller
         return view('reports.inventory_custodian_slip',compact('inv'));
     }
 
-    public function requisition_issue_slip(){
+    public function requisition_issue_slip(Request $request){
         $ris = DB::table('requisitions as a')
         ->leftjoin('offices as b','b.id','a.office_id')
+        ->where('a.id', $request->id)
         ->selectraw('a.*,b.name')
         ->first();
-        $ris_details = DB::table('requisitions_details')
+        $ris_details = DB::table('requisition_details')
         ->where('ris_id',$ris->id)
         ->get();
         return view('reports.requisition_issue_slip',compact('ris','ris_details'));

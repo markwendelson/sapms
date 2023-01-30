@@ -25,9 +25,9 @@
             const pathName = window.location.pathname.split("/")
 
             var pageUrl = window.location.href.split(/[?#]/)[0];
-            console.log(this.href)
-            console.log(pageUrl)
-            console.log(pathName)
+            // console.log(this.href)
+            // console.log(pageUrl)
+            // console.log(pathName)
 
             if (this.href == pageUrl || this.href.includes(pathName[1])) {
                 $(this).addClass("active");

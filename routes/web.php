@@ -132,7 +132,7 @@ Route::any('/reports/inspection-acceptance',[ReportController::class,'inspection
 Route::any('/reports/purchase-request',[ReportController::class,'purchase_request'])->name('reports.pr');
 Route::any('/reports/purchase-order',[ReportController::class,'purchase_order'])->name('reports.po');
 Route::any('/reports/property-card',[ReportController::class,'property_card'])->name('reports.property-card');
-Route::any('/reports/property-acknowledge_receipt',[ReportController::class,'property_acknowledge_receipt']);
+Route::any('/reports/property-acknowledge_receipt',[ReportController::class,'property_acknowledge_receipt'])->name('reports.par');
 Route::any('/reports/inventory-custodian_slip',[ReportController::class,'inventory_custodian_slip'])->name('reports.ics');
 Route::any('/reports/requisition-issue-slip',[ReportController::class,'requisition_issue_slip'])->name('reports.ris');
 Route::any('/reports/inspection-acceptance-report',[ReportController::class,'inspection_acceptance_report'])->name('reports.iar');

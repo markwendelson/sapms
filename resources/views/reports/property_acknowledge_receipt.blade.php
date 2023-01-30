@@ -146,7 +146,6 @@
     </div>
 
     <div class="page-footer">
-    {{ date('M d, Y H:i:s') }}
     </div>
 
     <div class="for_pr">
@@ -157,7 +156,7 @@
                     <br>
                     <div class="row">
                         <div class="col-md-12 text-center pt-3" style="font-size: 15pt;">
-                            <b>PROPERTY ACKNOWLEDGE RECEIPT</b>
+                            <b>PROPERTY ACKNOWLEDGEMENT RECEIPT</b>
                         </div>
                     </div>
                     <br><br>

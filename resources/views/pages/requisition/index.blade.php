@@ -34,24 +34,18 @@
                                     <td>Date</td>
                                     <td>Requisition Number</td>
                                     <td>Status</td>
-                                    <td>Created By</td>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>2022-06-19</td>
-                                    <td>
-                                        <a href="{{route('requisition-and-issuance.show',1)}}">RIS-06-2022-0000001</a>
-                                    </td>
-                                    <td><span>Pending</span></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>2022-06-20</td>
-                                    <td>RIS-06-2022-0000002</td>
-                                    <td><span>Approved</span></td>
-                                    <td></td>
-                                </tr>
+                                @foreach ($ris as $item)
+                                    <tr>
+                                        <td>{{date_format(date_create($item->created_at),"Y-m-d")}}</td>
+                                        <td>
+                                            <a href="{{route('requisition-and-issuance.show',$item->id)}}">{{$item->ris_no}}</a>
+                                        </td>
+                                        <td>{{$item->status}}</td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
