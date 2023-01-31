@@ -70,10 +70,10 @@ class RequisitionController extends Controller
             $ris_details[$key]['unit_of_measure'] = $item['item']['unit_of_measure'];
         }
 
-        \DB::table('requisitions_details')->insert($ris_details);
+        \DB::table('requisition_details')->insert($ris_details);
 
         // clear session requisitions_details
-        $request->session()->forget(['requisitions_details']);
+        $request->session()->forget(['requisition_items']);
 
         return redirect()->route('requisition-and-issuance.show', $requistion->id)->with('message', 'Requisition and Issuance successfuly saved.');
 

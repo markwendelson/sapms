@@ -83,7 +83,6 @@
                             <span key="t-projects">Reports</span>
                         </a>
                         <ul class="sub-menu" aria-expanded="false">
-                            <li><a href="{{route('reports')}}" key="t-stock-card">Stock Card</a></li>
                             <li><a href="{{route('reports')}}" key="t-property-card">Property Card</a></li>
                             <li><a href="{{route('reports')}}" key="t-rsmi">Report of Supplies and Materials Issued</a></li>
                             <li><a href="{{route('reports')}}" key="t-pci">Physical Count of Inventories</a></li>
