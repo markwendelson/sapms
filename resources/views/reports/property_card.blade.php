@@ -179,7 +179,7 @@
                                 <td colspan="4" rowspan="2" style="vertical-align:middle;">Property No.: <b>17-0001</b></td>
                             </tr>
                             <tr>
-                                <td>Description: Model:E14-4756 Brand:Acer S/N: NX6CPSP0026230644076</td>
+                                <td>Description: Model: {{ $property->model }} Brand: {{ $property->brand }} S/N: {{ $property->serial_no }}</td>
                             </tr>
                             <tr class="table_head_property_card">
                               <td rowspan="2">DATE</td>
@@ -200,7 +200,7 @@
                               <td></td>
                               <td></td> -->
                             </tr>
-                            @foreach ($property as $item)
+                            @foreach ($details as $item)
                                 <tr class="text-center">
                                     <td >{{date('m/d/Y',strtotime($item->date_acquired))}}</td>
                                     <td>{{$item->code}}</td>

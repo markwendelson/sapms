@@ -153,18 +153,18 @@
                     </div>
                     <br><br>
                     <div class="row">
-                        <div class="col-8">
+                        <div class="col-9">
                         <b>ALMA D. CANDIDO, CPA</b><br>
                         State Auditor IV<br>
                         COA Eastern Samar<br>
                         Provincial Field Office<br>
                         Borongan City
                         </div>
-                        <div class="col-2">Date: <u>{{date('m/d/Y',strtotime($ia->created_at))}}</u></div>
+                        <div class="col-3">Date: <u style="text-transform: uppercase;">{{date('F d, Y',strtotime($ia->created_at))}}</u></div>
                     </div>
                     <br>
                     <div class="row">
-                        <div class="col-8">
+                        <div class="col-10">
                             &emsp; &emsp;&emsp; In compliance with COA existing rules and regulation under Section 6.9 of COA Circular No. 2009-002 and Sec. 114,
                             Rule 15. COA Cir. 92-386, undersigned respectfully furnish your office copies of <b>Inspection And Acceptance Report</b>
                             and copies of delivery documents with in twenty four (24) hours.
@@ -173,7 +173,7 @@
                     <br>
                     <div class="row">
                         <div class="col-7">
-                           <b>Requisitioning Office/Department:<b> <u>{{$ia->name}}</u>
+                           <b>Requisitioning Office/Department:</b> <u>{{$ia->name}}</u>
                         </div>
                         <div class="col-3">
                            <b>IAR No.:</b> <u>{{$ia->iar_no}}</u>
@@ -189,7 +189,10 @@
                             <th>REMARKS</th>
                         </thead>
                         <tbody>
-                            @php $row = 1; @endphp
+                            @php
+                                $row = 1;
+                                $limit = 35;
+                            @endphp
                             @foreach ($ia_details as $item)
                             <tr>
                                 <td class="text-center">{{$row}}</td>
@@ -206,6 +209,15 @@
                                  ********** NOTHING FOLLOWS **********
                                 </td>
                             </tr>
+                            @for ($i = $row; $i <= $limit; $i++)
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            @endfor
                         </tbody>
                     </table>
                   <br>

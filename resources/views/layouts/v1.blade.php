@@ -31,6 +31,14 @@
             font-weight: 600;
             text-transform: uppercase;
         }
+
+        .title {
+            font-weight: 600;
+        }
+
+        td.title {
+            background: #dedede;
+        }
     </style>
 
     @stack('extra_css')

@@ -10,16 +10,18 @@ class ItemController extends Controller
 {
     public function index()
     {
-        $items = Item::all();
+        $items = Item::orderByDesc('created_at')->get();
         return view('pages.item.index', compact('items'));
     }
 
     public function create()
     {
-        $items = Item::whereYear('created_at', '=', date('Y'))->whereMonth('created_at', '=', date('m'))->get();
-        $item_code = config('constants.item_code').str_pad($items->count() +  1,5,0,STR_PAD_LEFT);
+        $count = Item::whereYear('created_at', '=', date('Y'))->whereMonth('created_at', '=', date('m'))->count();
+        $item_code = config('constants.item_code').str_pad($count +  1,5,0,STR_PAD_LEFT);
 
-        return view('pages.item.create')->with('item_code', $item_code);
+        $autocomplete = Item::distinct('name')->pluck('name')->toArray();
+
+        return view('pages.item.create', compact('item_code', 'autocomplete'));
     }
 
     public function store(ItemRequest $request)
@@ -35,6 +37,10 @@ class ItemController extends Controller
         $item->useful_life = $request->useful_life;
         $item->fixed_asset = $request->fixed_asset;
         $item->date_acquired = $request->date_acquired;
+        $item->type = $request->type;
+        $item->brand = $request->brand;
+        $item->model = $request->model;
+        $item->serial_no = $request->serial_no;
         $item->save();
 
         return redirect()->route('item.show', $item->id)->with('message', 'Item successfuly saved.');
@@ -43,7 +49,18 @@ class ItemController extends Controller
     public function show($id)
     {
         $item = Item::findOrFail($id);
-        return view('pages.item.show', compact('item'));
+
+        $details = \DB::table('purchase_requests as pr')
+                        ->leftJoin('purchase_request_details as pr_det', 'pr_det.pr_id', 'pr.id')
+                        ->leftJoin('purchase_orders as po', 'po.pr_id', 'pr.id')
+                        ->leftJoin('purchase_order_details as po_det', 'po_det.po_id', 'po.id')
+                        ->leftJoin('inspection_and_acceptances as iar', 'iar.po_id', 'po.id')
+                        ->leftJoin('inspection_and_acceptance_details as iar_det', 'iar_det.iar_id', 'iar.id')
+                        ->leftJoin('offices', 'offices.id', 'po.office_id')
+                        ->where('pr_det.item_id', $id)
+                        ->get(['po.*','iar_det.quantity_received', 'offices.name as office_name', 'po_det.unit_cost']);
+
+        return view('pages.item.show', compact('item', 'details'));
     }
 
     public function edit(Request $request, $id)

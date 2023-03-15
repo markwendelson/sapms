@@ -7,12 +7,14 @@ use DB;
 
 class ReportController extends Controller
 {
-    public function inspection_acceptance(){
+    public function inspection_acceptance(Request $request){
         $ia = DB::table('inspection_and_acceptances as a')
         ->leftjoin('purchase_orders as b','b.id','a.po_id')
         ->leftjoin('offices as c','c.id','a.office_id')
         ->selectraw('a.*,b.po_no,c.name')
+        ->where('a.id', $request->id)
         ->first();
+
         $ia_details = DB::table('inspection_and_acceptance_details')
         ->where('iar_id',$ia->id)
         ->get();
@@ -24,8 +26,9 @@ class ReportController extends Controller
     public function purchase_request(Request $request){
         $pr = DB::table('purchase_requests as a')
         ->leftjoin('offices as b','b.id','a.office_id')
+        ->leftjoin('users as u','u.id','a.requested_by')
         ->where('a.id', $request->id)
-        ->selectraw('a.*,b.name')
+        ->selectraw('a.*,b.name as office,u.name as requisitioner')
         ->first();
 
         $pr_details = DB::table('purchase_request_details')
@@ -47,23 +50,44 @@ class ReportController extends Controller
         return view('reports.purchase_order',compact('po','po_details'));
     }
 
-    public function property_card(){
+    public function property_card(Request $request){
         $property = DB::table('items')
-        ->get();
-        return view('reports.property_card',compact('property'));
+                    ->where('id', $request->id)
+                    ->first();
+
+        $details  = DB::table('purchase_request_details')
+                    ->where('item_id', $request->id)
+                    ->get();
+        return view('reports.property_card',compact('property', 'details'));
     }
 
     public function property_acknowledge_receipt(Request $request){
-        $property = DB::table('items')
-        // ->where('id', $request->id)
-        ->get();
-        return view('reports.property_acknowledge_receipt',compact('property'));
+        $ia = DB::table('inspection_and_acceptances as a')
+            ->leftjoin('purchase_orders as b','b.id','a.po_id')
+            ->leftjoin('offices as c','c.id','a.office_id')
+            ->where('a.id', $request->id)
+            ->selectraw('a.*,b.po_no,c.name')
+            ->first();
+        $ia_details = DB::table('inspection_and_acceptance_details')
+            ->where('iar_id',$ia->id)
+            ->get();
+
+        return view('reports.property_acknowledge_receipt',compact('ia','ia_details'));
     }
 
-    public function inventory_custodian_slip(){
-        $inv = DB::table('items')
-        ->get();
-        return view('reports.inventory_custodian_slip',compact('inv'));
+    public function inventory_custodian_slip(Request $request){
+        $ia = DB::table('inspection_and_acceptances as a')
+            ->leftjoin('purchase_orders as b','b.id','a.po_id')
+            ->leftjoin('offices as c','c.id','a.office_id')
+            ->leftjoin('purchase_order_details as d','b.id','d.po_id')
+            ->where('a.id', $request->id)
+            ->selectraw('a.*,b.po_no,c.name, d.unit_cost')
+            ->first();
+        $ia_details = DB::table('inspection_and_acceptance_details')
+            ->where('iar_id',$ia->id)
+            ->get();
+
+        return view('reports.inventory_custodian_slip',compact('ia','ia_details'));
     }
 
     public function requisition_issue_slip(Request $request){

@@ -156,26 +156,25 @@
                     </div>
                     <br><br>
                     <div class="row p-0 m-0  ">
-                        <div class="col-8 text-center border ">
+                        <div class="col-8 text-center border border-dark border-end-0">
                             <div class="row pt-2">
                                 <div class="col-1">
                                     Supplier:
                                 </div>
-                                <div class="col-9">
+                                <div class="col-9 fw-bold">
                                     {{$po->supplier_name}}
                                 </div>
                             </div>
-                            <br><br>
                             <div class="row pb-2">
                                 <div class="col-1">
                                     Address:
                                 </div>
-                                <div class="col-9">
+                                <div class="col-9 fw-bold">
                                     {{$po->supplier_address}}
                                 </div>
                             </div>
                         </div>
-                        <div class="col-4 border">
+                        <div class="col-4 border border-dark">
                            <div class="row px-2 border-1 border-bottom">
                                P.O No. : {{$po->po_no}}
                            </div>
@@ -183,16 +182,16 @@
                                Date: {{date('m/d/Y',strtotime($po->created_at))}}
                            </div>
                            <div class="row px-2 " >
-                                <div class="col-6 ">
+                                <div class="col-6 border-1 border border-start-0 border-top-0 border-bottom-0 pb-0 mb-0" style="height:3vh;">
                                     Mode of Procurement
                                 </div>
-                                <div class="col-6 ">
+                                <div class="col-6 fw-bold">
                                     {{$po->mode_of_procurement}}
                                 </div>
                            </div>
                         </div>
                     </div>
-                    <div class="row py-3 p-0 m-0 border ">
+                    <div class="row py-3 p-0 m-0 border border-dark border-top-0">
                         <div class="col-1">
                             Gentlemen:
                         </div>
@@ -201,12 +200,12 @@
                         </div>
                     </div>
                     <div class="row p-0 m-0 ">
-                        <div class="col-8 border py-1 ">
+                        <div class="col-8 border py-1 border-dark border-top-0 border-bottom-0">
                             <div class="row">
                                 <div class="col-3">
                                     Place of Delivery:
                                 </div>
-                                <div class="col-9 text-center">
+                                <div class="col-9 text-center fw-bold">
                                     {{$po->place_of_delivery}}
                                 </div>
                             </div>
@@ -214,12 +213,12 @@
                                 <div class="col-3">
                                     Date of Delivery:
                                 </div>
-                                <div class="col-9 text-center">
+                                <div class="col-9 text-center fw-bold">
                                     {{$po->date_of_delivery}}
                                 </div>
                             </div>
                         </div>
-                        <div class="col-4 text-center border  ">
+                        <div class="col-4 text-center border-end border-dark">
                             <div class="row ">
                                 <div class="col-5">
                                     Delivery Time:
@@ -242,7 +241,7 @@
                         <thead class="text-center">
                             <th width="5%">STOCK NO.</th>
                             <th width="5%">UNIT</th>
-                            <th width="50%">ITEMS AND DESCRIPTION</th>
+                            <th width="58%">ITEMS AND DESCRIPTION</th>
                             <th>QTY</th>
                             <th>UNIT COST</th>
                             <th>AMOUNT</th>
@@ -277,14 +276,14 @@
                                 <td></td>
                             </tr>
                             @endfor
-                            <tr style="line-height: 30px;" class="text-center">
-                                <td colspan="2">TOTAL AMOUNT IN WORDS</td>
-                                <td colspan="3">{{ \App\Http\Controllers\ReportController::convert_number_to_words($total) }}</td>
-                                <td>₱{{number_format($total,2)}}</td>
+                            <tr style="line-height: 10px;" class="text-center fw-bold">
+                                <td style="vertical-align:middle;" colspan="2" class="fw-normal">TOTAL AMOUNT IN WORDS</td>
+                                <td colspan="3" style="text-transform:uppercase;vertical-align:middle;" >{{ \App\Http\Controllers\ReportController::convert_number_to_words($total) }} only.</td>
+                                <td style="vertical-align:middle;">₱{{number_format($total,2)}}</td>
                             </tr>
                         </tbody>
                     </table>
-                    <div class="row py-3 p-0 m-0 border ">
+                    <div class="row py-3 p-0 m-0 border border-dark border-top-0">
                         <div class="row">
                             <div class="col-9">
                                 &emsp;&emsp;&emsp;&emsp; In case of failure to make the full delivery within the time specified above, a penalty of one-tenth(1/10) of one percent for everyday of delay shall be imposed.
@@ -311,7 +310,7 @@
                             </div>
                         </div>
                         <div class="row pt-2 text-center">
-                            <div class="col-4 offset-1  border-1 border-bottom">
+                            <div class="col-4 offset-1  border-1 border-bottom fw-bold">
                                  MS. CHRISTINA C. CABAGUING
                             </div>
                         </div>
@@ -332,12 +331,12 @@
                         </div>
                     </div>
                     <div class="row p-0 m-0  ">
-                        <div class="col-7 border">
+                        <div class="col-7 border border-dark border-top-0">
                             <div class="row">
                                 Funds Available:
                             </div>
                             <div class="row text-center">
-                                <div class="offset-3 col-9 border-1 border-bottom">
+                                <div class="offset-3 col-9 border-1 border-bottom fw-bold">
                                     DIANE B. CINCO
                                 </div>
                             </div>
@@ -347,7 +346,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-5 border">
+                        <div class="col-5 border border-dark border-start-0 border-top-0">
                             <div class="row">
                                 <div class="col-4">
                                     ALOBS No. :
@@ -363,6 +362,16 @@
                                 <div class="col-8 border-1 border-bottom">
 
                                 </div>
+                            </div>
+                        </div>
+                        <div class="row p-0 m-0 ">
+                            <div class="col-4 offset-8">
+                                @php
+                                    $pr = \DB::table('purchase_requests')->where('id', $po->pr_id)->first();
+                                @endphp
+                                <span class="float-end">
+                                   (Reference PR No.: <b>{{$pr->pr_no}}</b>)
+                                </span>
                             </div>
                         </div>
                     </div>

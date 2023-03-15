@@ -15,6 +15,8 @@ use App\Http\Controllers\RequisitionController;
 use App\Http\Controllers\SupplyAvailabilityController;
 use App\Http\Controllers\UserAccessController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\GeneralController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -107,20 +109,52 @@ Route::middleware(['auth', 'role:super-admin|admin'])->prefix('admin')->group( f
 });
 
 
-Route::middleware(['auth', 'role:super-admin|admin|purchase-request'])->group( function($route) {
-    $route->post('/purchase-request/add',[PurchaseRequestController::class,'add'])->name('purchase-request.add');
-    $route->delete('/purchase-request/remove',[PurchaseRequestController::class,'remove'])->name('purchase-request.remove');
-    $route->get('/purchase-request/{id}/print',[PurchaseRequestController::class,'print'])->name('purchase-request.print');
-    $route->resource('purchase-request', 'App\Http\Controllers\PurchaseRequestController');
+Route::middleware(['auth'])->group( function($route) {
+
+    // Purchase Request
+    $route->post('/purchase-request/add',[PurchaseRequestController::class,'add'])->name('purchase-request.add')->middleware('permission:can-create-purchase-request');
+    $route->delete('/purchase-request/remove',[PurchaseRequestController::class,'remove'])->name('purchase-request.remove')->middleware('permission:can-create-purchase-request');
+    $route->get('/purchase-request/{id}/print',[PurchaseRequestController::class,'print'])->name('purchase-request.print')->middleware('permission:can-view-purchase-request');
+
+    Route::group([], function ($route) {
+        $route->get('/purchase-request/create', [PurchaseRequestController::class,'create'])->name('purchase-request.create')->middleware('role_or_permission:super-admin|purchase-request|create-purchase-request');
+        $route->post('/purchase-request', [PurchaseRequestController::class,'store'])->name('purchase-request.store')->middleware('role_or_permission:super-admin|purchase-request|create-purchase-request');
+        Route::group(['middleware' => ['role_or_permission:super-admin|purchase-request|view-purchase-request']], function($route) {
+            $route->get('/purchase-request', [PurchaseRequestController::class,'index'])->name('purchase-request.index');
+            $route->get('/purchase-request/{id}', [PurchaseRequestController::class,'show'])->name('purchase-request.show');
+        });
+
+        // $route->resource('purchase-request', 'App\Http\Controllers\PurchaseRequestController');
+    });
+
+    // Purchase Order
+    $route->post('/purchase-order/add',[PurchaseOrderController::class,'add'])->name('purchase-order.add')->middleware('permission:can-create-purchase-order');
+    $route->delete('/purchase-order/remove',[PurchaseOrderController::class,'remove'])->name('purchase-order.remove')->middleware('permission:can-create-purchase-order');
+    $route->get('/purchase-order/{id}/print',[PurchaseOrderController::class,'print'])->name('purchase-order.print')->middleware('permission:can-view-purchase-order');
+
+    Route::group([], function ($route) {
+        $route->get('/purchase-order/create', [PurchaseOrderController::class,'create'])->name('purchase-order.create')->middleware('role_or_permission:super-admin|purchase-order|create-purchase-order');
+        $route->post('/purchase-order', [PurchaseOrderController::class,'store'])->name('purchase-order.store')->middleware('role_or_permission:super-admin|purchase-order|create-purchase-order');
+        Route::group(['middleware' => ['role_or_permission:super-admin|purchase-order|view-purchase-order']], function($route) {
+            $route->get('/purchase-order', [PurchaseOrderController::class,'index'])->name('purchase-order.index');
+            $route->get('/purchase-order/{id}', [PurchaseOrderController::class,'show'])->name('purchase-order.show');
+        });
+
+        // $route->resource('purchase-order', 'App\Http\Controllers\PurchaseOrderController');
+    });
+
+    $route->get('/autocomplete/supplies', [GeneralController::class, 'autoCompleteSupplies'])->name('autocomplete-supplies');
+    $route->get('/autocomplete/brands', [GeneralController::class, 'autoCompleteBrands'])->name('autocomplete-brands');
+    $route->get('/autocomplete/models', [GeneralController::class, 'autoCompleteModels'])->name('autocomplete-models');
 });
 
 
-Route::middleware(['auth', 'role:super-admin|admin|purchase-order'])->group( function($route) {
-    $route->post('/purchase-order/add',[PurchaseOrderController::class,'add'])->name('purchase-order.add');
-    $route->delete('/purchase-order/remove',[PurchaseOrderController::class,'remove'])->name('purchase-order.remove');
-    $route->get('/purchase-order/{id}/print',[PurchaseOrderController::class,'print'])->name('purchase-order.print');
-    $route->resource('purchase-order', 'App\Http\Controllers\PurchaseOrderController');
-});
+// Route::middleware(['auth', 'role:super-admin|admin|purchase-order'])->group( function($route) {
+//     $route->post('/purchase-order/add',[PurchaseOrderController::class,'add'])->name('purchase-order.add')->middleware('permission:can-create-purchase-order');
+//     $route->delete('/purchase-order/remove',[PurchaseOrderController::class,'remove'])->name('purchase-order.remove');
+//     $route->get('/purchase-order/{id}/print',[PurchaseOrderController::class,'print'])->name('purchase-order.print');
+//     $route->resource('purchase-order', 'App\Http\Controllers\PurchaseOrderController');
+// });
 
 Route::middleware(['auth', 'role:super-admin|admin|inspection-and-acceptance'])->group( function($route) {
     $route->resource('inspection-and-acceptance', 'App\Http\Controllers\InspectionAcceptanceController');

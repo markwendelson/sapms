@@ -46,7 +46,33 @@
                                     <td>
                                         <a href="{{route('item.show',$item)}}">{{$item->code}}</a>
                                     </td>
-                                    <td>{{$item->name}}</td>
+                                    <td>
+                                        <h6>{{$item->name}}</h6>
+                                        <ul class="list-group list-group-flush">
+                                            @if(!empty($item->brand))
+                                                <li class="list-group-item p-0">
+                                                    <label>Brand:</label>
+                                                    <span>{{$item->brand}}</span>
+                                                </li>
+                                            @endif
+
+                                            @if(!empty($item->model))
+                                            <li class="list-group-item p-0">
+                                                <label>Model:</label>
+                                                <span>{{$item->model}}</span>
+                                            </li>
+                                            @endif
+
+                                            @if(!empty($item->serial_no))
+                                            <li class="list-group-item p-0">
+                                                <label>Serial No.:</label>
+                                                <span>{{$item->serial_no}}</span>
+                                            </li>
+                                            @endif
+
+                                        </ul>
+
+                                    </td>
                                     <td>{{$item->quantity}}</td>
                                     <td>{{$item->unit_of_measure}}</td>
                                     {{-- <td>
@@ -75,7 +101,9 @@
 @push('scripts')
     <script>
         $(document).ready(function() {
-            $('#datatable').DataTable();
+            $('#datatable').DataTable({
+                "aaSorting": []
+            });
         });
     </script>
 @endpush

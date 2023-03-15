@@ -148,11 +148,11 @@
         <div class="container-fluid">
             <div class="col-md-12">
                 <div class="page for_inspection">
-                    <div class="page-header-space">
+                    {{-- <div class="page-header-space">
 
-                    </div>
+                    </div> --}}
                     <div class="row">
-                        <div class="col-md-12 text-center pt-3 " style="font-size: 15pt;">
+                        <div class="col-md-12 text-center pt-3 " style="font-size: 15pt;margin-bottom:20px;">
                             <b>INSPECTION AND ACCEPTANCE REPORT</b>
                         </div>
                     </div>
@@ -163,10 +163,10 @@
                         <div class="col-6 border-1 border-bottom">
                             {{$ia->supplier_name}}
                         </div>
-                        <div class="col-2">
+                        <div class="col-2" style="width: 90px">
                             IAR No :
                         </div>
-                        <div class="col-2 border-1 border-bottom">
+                        <div class="col-2 border-1 border-bottom" style="width: 120px">
                             {{$ia->iar_no}}
                         </div>
                     </div>
@@ -177,10 +177,10 @@
                         <div class="col-6 border-1 border-bottom">
                             {{$ia->po_no}}
                         </div>
-                        <div class="col-2">
+                        <div class="col-2" style="width: 90px">
                             Invoice No :
                         </div>
-                        <div class="col-2 border-1 border-bottom">
+                        <div class="col-2 border-1 border-bottom" style="width: 120px">
                             {{$ia->invoice_no}}
                         </div>
                     </div>
@@ -191,10 +191,10 @@
                         <div class="col-6 border-1 border-bottom">
                             {{$ia->name}}
                         </div>
-                        <div class="col-2">
+                        <div class="col-2" style="width: 90px">
                             Date :
                         </div>
-                        <div class="col-2 border-1 border-bottom">
+                        <div class="col-2 border-1 border-bottom" style="width: 120px">
                             {{date('m/d/Y',strtotime($ia->created_at))}}
                         </div>
                     </div>
@@ -211,7 +211,10 @@
                             <th width="10%">SERIAL NO.</th>
                         </thead>
                         <tbody >
-                           @php $row = 1; @endphp
+                           @php
+                                $row = 1;
+                                $limit = 20;
+                            @endphp
                            @foreach ($ia_details as $item)
                                <tr class="text-center">
                                    <td >{{$row}}</td>
@@ -225,20 +228,33 @@
                                </tr>
                                @php $row++;@endphp
                            @endforeach
+
+                           @for ($i = $row; $i <= $limit; $i++)
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            @endfor
                         </tbody>
                     </table>
 
                     <div class="row  p-0 m-0 ">
-                        <div class="col-6 text-center border ">
+                        <div class="col-6 text-center border border-dark border-top-0 border-end-0">
                             INSPECTION
                         </div>
-                        <div class="col-6 text-center border ">
+                        <div class="col-6 text-center border border-dark border-top-0">
                             ACCEPTANCE
                         </div>
                     </div>
                     <div class="row p-0 m-0 for_inspection">
                         {{-- inspection --}}
-                        <div class="col-6 text-center border ">
+                        <div class="col-6 text-center border border-dark border-top-0 border-end-0">
                             <div class="row py-3">
                                 <div class="col-5">
                                     Date Inspected:
@@ -250,11 +266,11 @@
                             <div class="row">
                                 <div class="col-3 offset-1">
                                     <div class="card" >
-                                        <div class="card-body">
+                                        <div class="card-body border border-dark">
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-7 py-1">
+                                <div class="col-7 py-1" style="text-align: left;">
                                     <p class="mb-0"> Inspected, verified & found OK as to quantity &
                                     <br> Inspections</p>
                                 </div>
@@ -361,7 +377,7 @@
                                 <br><br><br>
                         </div>
                         {{-- acceptance --}}
-                        <div class="col-6 text-center border ">
+                        <div class="col-6 text-center border border-dark border-top-0">
                             <div class="row py-3">
                                 <div class="col-5">
                                     Date Received:
@@ -374,10 +390,10 @@
                                    Remarks:
                                 </div>
                             </div>
-                            <div class="row py-1">
+                            <div class="row py-1 pb-0">
                                 <div class="col-3 offset-2">
-                                    <div class="card" >
-                                        <div class="card-body">
+                                    <div class="card mb-0">
+                                        <div class="card-body border border-dark border-bottom-0">
                                         </div>
                                     </div>
                                 </div>
@@ -388,11 +404,11 @@
                             <div class="row">
                                 <div class="col-3 offset-2">
                                     <div class="card" >
-                                        <div class="card-body">
+                                        <div class="card-body border border-dark">
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-6 text-left m-0 py-2">
+                                <div class="col-6 text-left m-0 py-2" style="text-align: left;">
                                     Partial (pls. specify quantity)
                                 </div>
                             </div>

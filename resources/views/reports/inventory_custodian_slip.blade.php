@@ -33,7 +33,7 @@
         }
 
         .page-header, .page-header-space {
-            height: 80px;
+            height: 10px;
           }
 
           .page-footer, .page-footer-space {
@@ -129,7 +129,7 @@
 </head>
 <body>
     <div class="page-header">
-        <div class="row">
+        {{-- <div class="row">
             <div class="col-4">
                 <img src="{{ asset('images/logo-borongan.jpg') }}" style="height:70px;float:right"/>
             </div>
@@ -142,12 +142,15 @@
              <div class="col-4 text-left">
                 <img src="{{ asset('images/logo-da.jpeg') }}" style="height:70px"/>
             </div>
+        </div> --}}
+        <div class="float-end">
+            Appendix 59
         </div>
     </div>
 
-    <div class="page-footer">
+    {{-- <div class="page-footer">
     {{ date('M d, Y H:i:s') }}
-    </div>
+    </div> --}}
 
     <div class="for_pr">
         <div class="container-fluid">
@@ -185,36 +188,35 @@
                     <br>
                     <table class="table table-bordered m-0">
                         <thead class="text-center align-items-center">
-                            <th width="10%" rowspan="2" width="10%">QTY</th>
-                            <th width="10%">UNIT</th>
-                            <th width="25%" colspan="2">AMOUNT</th>
-                            <th width="20%">DESCRIPTION</th>
-                            <th>DATE ACQUIRED</th>
-                            <th width="10%">INVENTORY ITEM NO.</th>
-                            <th width="10%">ESTIMATED USEFUL LIFE</th>
-                        </thead>
-                        <thead class="text-center align-items-center">
-                            <th></th>
-                            <th></th>
-                            <th>Unit Cost</th>
-                            <th>Total Cost</th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
+                            <tr>
+                                <th width="10%" rowspan="2" width="10%">QTY</th>
+                                <th width="10%" rowspan="2">UNIT</th>
+                                <th width="25%" colspan="2">AMOUNT</th>
+                                <th width="20%"rowspan="2">DESCRIPTION</th>
+                                <th rowspan="2">DATE ACQUIRED</th>
+                                <th width="10%" rowspan="2">INVENTORY ITEM NO.</th>
+                                <th width="10%" rowspan="2">ESTIMATED USEFUL LIFE</th>
+                            </tr>
+                            <tr>
+                                <th>Unit Cost</th>
+                                <th>Total Cost</th>
+                            </tr>
                         </thead>
                         <tbody>
-                            @php $row = 1; @endphp
-                            @foreach ($inv as $item)
+                            @php
+                                $row = 1;
+                                $limit = 25;
+                            @endphp
+                            @foreach ($ia_details as $item)
                                 <tr class="text-center">
-                                    <td >{{(int)$item->quantity}}</td>
+                                    <td >{{(int)$item->quantity_received}}</td>
                                     <td>{{$item->unit_of_measure}}</td>
-                                    <td>{{ number_format($item->price,2) }}</td>
-                                    <td>{{number_format($item->price * $item->quantity,2)}}</td>
-                                    <td>{{$item->description}}</td>
-                                    <td>{{date('m/d/Y',strtotime($item->date_acquired))}}</td>
-                                    <td>{{$item->code}}</td>
-                                    <td>{{$item->useful_life}}</td>
+                                    <td>{{ number_format($item->unit_cost,2) }}</td>
+                                    <td>{{number_format($item->unit_cost * $item->quantity_received,2)}}</td>
+                                    <td>{{$item->item_description}}</td>
+                                    <td>{{date('m/d/Y',strtotime($ia->date_received))}}</td>
+                                    <td></td>
+                                    <td></td>
                                 </tr>
                                 @php $row++;@endphp
                             @endforeach
@@ -223,9 +225,21 @@
                                  ********** NOTHING FOLLOWS **********
                                 </td>
                             </tr>
+                            @for ($i = $row; $i <= $limit; $i++)
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            @endfor
                             <tr class="par_signatory">
                               <td colspan="4"><br>Received by:<br><br>
-                                 <div>
+                                 <div class="text-center">
                                     <p>
                                         <u><b>PLTCOL  RUEL L. BURLAT</b></u>
                                         <br>Signature Over Printed Name
@@ -235,11 +249,11 @@
                                         <br>(Position/Office)
                                     </p>
 
-                                    <p>Date</p>
+                                    <p style="border-top: solid 1px #000;margin-left: 25%;margin-right: 25%;">Date</p>
                                  </div>
                               </td>
                               <td colspan="4"><br>Issued by:<br><br>
-                                 <div>
+                                 <div class="text-center">
                                     <p><u><b>BONIFACIO S. BADILLO, JR.</b></u>
                                     <br>Signature Over Printed Name
                                     </p>
@@ -248,7 +262,7 @@
                                     <br>Position/Office
                                     </p>
 
-                                    <p>Date</p>
+                                    <p style="border-top: solid 1px #000;margin-left: 25%;margin-right: 25%;">>Date</p>
                                  </div>
                               </td>
                             </tr>

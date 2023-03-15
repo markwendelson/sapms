@@ -161,29 +161,29 @@
                     </div>
                     <br><br>
                     <div class="row">
-                        <div class="col-2">
-                           Entity Name :
+                        <div class="col-2" style="width:90px;">
+                           Entity Name  :
                         </div>
-                        <div class="col-4 border-1 border-bottom">
+                        <div class="col-4 border-1 border-bottom px-1">
                            City Social Welfare & Developement Office
                         </div>
-                        <div class="col-2">
-                           PAR No. :
+                        <div class="col-2" style="text-align: right;margin-left:150px;">
+                            PAR No.:
                         </div>
-                        <div class="col-4 border-1 border-bottom" style="text-transform: uppercase;">
+                        <div class="col-1 border-1 border-bottom" style="text-transform: uppercase;">
                             <b>20-0246</b>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-2">
-                           Fund Cluster :
+                        <div class="col-2" style="width:90px;">
+                           Fund Cluster:
                         </div>
-                        <div class="col-4 border-1 border-bottom">
+                        <div class="col-4 border-1 border-bottom px-1">
                         </div>
                     </div>
                     <br>
                     <div class="row">
-                        <div class="col-2">
+                        <div class="col-2" style="width:90px;">
                            Ref PIS No. :
                         </div>
                         <div class="col-1 border-1 border-bottom">
@@ -191,10 +191,10 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-2">
+                        <div class="col-2" style="width:90px;padding-left:3.9em;">
                            PRS No. :
                         </div>
-                        <div class="col-1 border-1 border-bottom">
+                        <div class="col-1 border-1 border-bottom px=1">
                         </div>
                     </div>
                     <br>
@@ -202,28 +202,77 @@
                         <thead class="text-center align-items-center">
                             <th width="10%">QTY</th>
                             <th width="10%">UNIT</th>
-                            <th width="15%">ITEMS AND DESCRIPTION</th>
+                            <th width="15%">DESCRIPTION</th>
                             <th width="10%">PROPERTY NUMBER</th>
                             <th width="10%">DATE ACQUIRED</th>
                             <th width="10%">AMOUNT</th>
                         </thead>
                         <tbody>
-                            @php $row = 1; @endphp
-                            @foreach ($property as $item)
+                            @php
+                                $row = 1;
+                                $limit = 10;
+                            @endphp
+                            @foreach ($ia_details as $item)
                             <tr class="text-center">
-                                <td >{{$row}}</td>
+                                <td>{{$row}}</td>
                                 <td>{{$item->unit_of_measure}}</td>
-                                <td>{!! nl2br($item->description)!!}</td>
-                                <td>{{$item->code }}</td>
-                                <td>{{date('m/d/Y',strtotime($item->date_acquired))}}</td>
-                                <td>{{number_format($item->price,2) }}</td>
+                                <td align="left">{{ $item->item_name }}</td>
+                                <td></td>
+                                <td>{{date('m/d/Y',strtotime($ia->date_received))}}</td>
+                                <td>{{number_format($item->unit_cost,2) }}</td>
                             </tr>
+
+                            @if(!empty($item->brand))
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td>{{ $item->brand }}</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            @endif
+
+                            @if(!empty($item->model))
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td>{{ $item->model }}</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            @endif
+
+                            @if(!empty($item->serial_no))
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td>{{ $item->serial_no }}</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            @endif
                             @php $row++; @endphp
                             @endforeach
                             <tr>
                                 <td colspan = "6" class="text-center">
                                  ********** NOTHING FOLLOWS **********
                                 </td>
+                            </tr>
+                            @for ($i = $row; $i <= $limit; $i++)
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            @endfor
+                            <tr>
+                                <td colspan="6">&nbsp;</td>
                             </tr>
                             <tr class="par_signatory">
                               <td colspan="3">Received by:<br><br>

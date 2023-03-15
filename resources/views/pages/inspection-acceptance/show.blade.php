@@ -24,12 +24,40 @@
 
             <div class="page-title-right">
                 {{-- {{route('purchase-request.edit', $iar->id)}} --}}
+                @if(auth()->user()->hasDirectPermission('edit-inspection-and-acceptance') && $iar->allow_edit)
                 <a href="#" class="btn btn-info waves-effect waves-light">
                     <i class="bx bx-edit font-size-16 align-middle me-2"></i> Edit
                 </a>
+                @endif
+
+                @if(auth()->user()->hasDirectPermission('delete-inspection-and-acceptance'))
                 <a href="#" class="btn btn-danger waves-effect waves-light">
                     <i class="bx bx-trash font-size-16 align-middle me-2"></i> Delete
                 </a>
+                @endif
+
+                @role('super-admin|admin')
+                    @if($iar->allow_edit)
+                    <a href="#" class="btn btn-info waves-effect waves-light">
+                        <i class="bx bx-edit font-size-16 align-middle me-2"></i> Disable Editing
+                    </a>
+                    @else
+                    <a href="#" class="btn btn-info waves-effect waves-light">
+                        <i class="bx bx-edit font-size-16 align-middle me-2"></i> Enable Editing
+                    </a>
+                    @endif
+
+                    @if($iar->allow_edit)
+                    <a href="#" class="btn btn-info waves-effect waves-light">
+                        <i class="bx bx-edit font-size-16 align-middle me-2" {{ $iar->allow_edit}}></i> Edit
+                    </a>
+                    @endif
+
+                    <a href="#" class="btn btn-danger waves-effect waves-light">
+                        <i class="bx bx-trash font-size-16 align-middle me-2"></i> Delete
+                    </a>
+                @endrole
+
                 <a href="javascript:void(0)" onclick="printPage('{{route('reports.ia', ['id' => $iar->id])}}');" class="btn btn-primary waves-effect waves-light">
                     <i class="bx bx-printer font-size-16 align-middle me-2"></i> Print I.A
                 </a>
@@ -58,24 +86,22 @@
                             <table class="table">
                                 <tbody>
                                     <tr>
-                                        <td style="width:700px" rowspan="2">Supplier: <br> {{$iar->supplier_name}}</td>
-                                        <td colspan="2">PO No.: {{$iar->po_no}}</td>
+                                        <td width="80px">Supplier:</td>
+                                        <td width="60%">{{$iar->supplier_name}}</td>
+                                        <td width="100px">IAR No.:</td>
+                                        <td>{{ $iar->iar_no }}</td>
                                     </tr>
                                     <tr>
-                                        <td colspan="2">Date: {{date_format(date_create($iar->created_at),"m/d/Y")}}</td>
+                                        <td>P.O No.:</td>
+                                        <td>{{ $iar->purchase_order->po_no }}</td>
+                                        <td>Invoice No.:</td>
+                                        <td></td>
                                     </tr>
                                     <tr>
-                                        <td>Address: {{$iar->supplier_address}}</td>
-                                        <td>Modem of Procurement: {{$iar->mode_of_procurement}}</td>
-                                        <td>Section: A</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Place of Delivery: {{$iar->place_of_delivery}}</td>
-                                        <td>Delivery Time: {{$iar->delivery_time}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Date of Delivery: {{$iar->date_of_delivery}}</td>
-                                        <td>Payment Term: {{$iar->payment_term}}</td>
+                                        <td>Department:</td>
+                                        <td>{{ $iar->office->name }}</td>
+                                        <td>Date:</td>
+                                        <td>{{ date_format(date_create($iar->created_at),"m/d/Y") }}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -89,8 +115,10 @@
                                         <td>UNIT</td>
                                         <td>ITEM AND DESCRIPTION</td>
                                         <td>QTY</td>
-                                        <td>UNIT COST</td>
-                                        <td>AMOUNT</td>
+                                        <td>TYPE</td>
+                                        <td>MODEL</td>
+                                        <td>BRAND</td>
+                                        <td>SERIAL NO.</td>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -106,20 +134,14 @@
                                                 <p>{{$item->item_description}}</p>
                                             </td>
                                             <td width="20px" align="center">{{floatval($item->quantity_received)}}</td>
-                                            <td width="20px" align="right">{{number_format($item->unit_cost,2)}}</td>
-                                            <td width="20px" align="right">{{number_format(($item->quantity_received * $item->unit_cost),2)}}</td>
-                                            @php
-                                            $total += $item->quantity_received * $item->unit_cost;
-                                            @endphp
+                                            <td>{{$item->type}}</td>
+                                            <td>{{$item->model}}</td>
+                                            <td>{{$item->brand}}</td>
+                                            <td>{{$item->serial_no}}</td>
                                         </tr>
                                     @endforeach
                                 </tbody>
                                 <tfoot>
-                                    <tr>
-                                        <td colspan="4"></td>
-                                        <td>Total</td>
-                                        <td>{{number_format($total,2)}}</td>
-                                    </tr>
                                 </tfoot>
                             </table>
                         </div>

@@ -3,6 +3,7 @@
 @push('extra_css')
 <link href="{{ asset('/libs/select2/css/select2.min.css')}}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('/libs/bootstrap-datepicker/css/bootstrap-datepicker.min.css')}}" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
 @endpush
 
 @section('content')
@@ -34,24 +35,42 @@
 
                                 <div class="mb-3 row">
                                     <div class="col-md-8">
-                                        <div class="mb-3 row">
+                                        <div class="row">
                                             <label for="code" class="col-md-3 col-form-label">Type</label>
                                             <div class="col-md-9 mt-2">
-                                                <input class="form-check-input" type="radio" name="type" id="semi-expandable" value="semi-expandable" checked>
-                                                <label class="form-check-label" for="semi-expandable">Semi-expandable</label>
-                                                <input class="form-check-input" type="radio" name="type" id="non-semi-expandable" value="non-semi-expandable">
-                                                <label class="form-check-label" for="non-semi-expandable">Non-semi-expandable</label>
+                                                <input class="form-check-input" type="radio" name="type" id="semi-expendable" value="semi-expendable" checked>
+                                                <label class="form-check-label" for="semi-expendable">Semi-expendable</label>
+                                                <input class="form-check-input" type="radio" name="type" id="non-expendable" value="non-expendable">
+                                                <label class="form-check-label" for="non-expendable">Non-expendable</label>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
-                                        <div class="mb-3 row">
+                                        <div class="row">
                                             <label for="sub-type" class="col-md-4 col-form-label">Sub-type</label>
                                             <div class="col-md-8 mt-2">
                                                 <input class="form-check-input sub-type" type="radio" name="sub-type" id="sphv" value="SPHV" checked>
                                                 <label class="form-check-label" for="sphv">High Value</label>
                                                 <input class="form-check-input sub-type" type="radio" name="sub-type" id="splv" value="SPLV">
                                                 <label class="form-check-label" for="splv">Low value</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <div class="col-md-6">
+                                        <div class="offset-4 d-flex gap-3 d-sm-flex" style="padding-left: 10px;">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="{{old('supplies')}}" id="supplies" name="supplies">
+                                                <label class="form-check-label" for="supplies">Supplies</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="{{old('fixed_asset')}}" id="fixed_asset" name="fixed_asset">
+                                                <label class="form-check-label" for="fixed_asset">Fixed Asset</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="{{old('biological_asset')}}" id="biological_asset" name="biological_asset">
+                                                <label class="form-check-label" for="biological_asset">Biological Asset</label>
                                             </div>
                                         </div>
                                     </div>
@@ -65,15 +84,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-2">
-                                        <div class="mb-3 row mt-2">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="{{old('fixed_asset')}}" id="fixed_asset" name="fixed_asset">
-                                                <label class="form-check-label" for="fixed_asset">Fixed Asset</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-4 offset-md-2">
                                         <div class="mb-3 row">
                                             <label for="code" class="col-md-4 col-form-label">Date Acquired</label>
                                             <div class="col-md-8">
@@ -98,6 +109,32 @@
                                     <label for="description" class="col-md-2 col-form-label">Description</label>
                                     <div class="col-md-10">
                                         <textarea class="form-control" type="text" id="description" name="description" required>{{old('description')}}</textarea>
+                                    </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3 row">
+                                            <label for="quantity" class="col-md-4 col-form-label">Model</label>
+                                            <div class="col-md-8">
+                                                <input class="form-control" type="text" value="{{old('model')}}" id="model" name="model">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="mb-3 row">
+                                            <label for="price" class="col-md-4 col-form-label">Brand</label>
+                                            <div class="col-md-8">
+                                                <input class="form-control" type="text" value="{{old('brand')}}" id="brand" name="brand">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="mb-3 row">
+                                            <label for="price" class="col-md-4 col-form-label">Serial No.</label>
+                                            <div class="col-md-8">
+                                                <input class="form-control" type="text" value="{{old('serial_no')}}" id="serial_no" name="serial_no">
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="mb-3 row">
@@ -167,14 +204,35 @@
 
     </div>
 </div>
+
 @endsection
 
 @push('scripts')
 <script src="{{asset('libs/select2/js/select2.min.js')}}"></script>
 <script src="{{asset('libs/bootstrap-datepicker/js/bootstrap-datepicker.min.js')}}"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+
 <script>
-    $(".select2").select2();
+    $(".select2").select2({
+        tags: true,
+        createTag: function (params) {
+            var term = $.trim(params.term);
+
+            if (term === '') {
+                return null;
+            }
+
+            return {
+                id: term,
+                text: term,
+                newTag: true // add additional parameters
+            }
+        }
+
+    });
+
     $('#date_acquired').datepicker();
+
     $( document ).ready( function () {
         $('#price').blur( function() {
             console.log($(this).val())
@@ -188,7 +246,75 @@
         var returnValue = newText[0].substr(4, stringLength);
         var newCode = $(this).val() + returnValue;
         $("#code").val(newCode);
+        if($(this).val() == 'SPLV') {
+            $("#price").attr({
+                "min" : 0,
+                "max" : 49999
+            });
+        } else {
+            $("#price").attr({
+                "min" : 50000,
+                "max" : 0
+            });
+        }
     })
+
+
+    this.initItems()
+    this.initBrands()
+    this.initModels()
+
+
+    function initItems()
+    {
+        $.ajax({
+            type: "GET",
+            url: `{{route('autocomplete-supplies')}}`,
+            data: {},
+            success: function(response) {
+                $("#name").autocomplete({
+                    source: response
+                });
+            },
+            error: function (error) {
+                toastr["error"](JSON.parse(error.responseText).message)
+            }
+        })
+    }
+
+    function initBrands()
+    {
+        $.ajax({
+            type: "GET",
+            url: `{{route('autocomplete-brands')}}`,
+            data: {},
+            success: function(response) {
+                $("#brand").autocomplete({
+                    source: response
+                });
+            },
+            error: function (error) {
+                toastr["error"](JSON.parse(error.responseText).message)
+            }
+        })
+    }
+
+    function initModels()
+    {
+        $.ajax({
+            type: "GET",
+            url: `{{route('autocomplete-models')}}`,
+            data: {},
+            success: function(response) {
+                $("#model").autocomplete({
+                    source: response
+                });
+            },
+            error: function (error) {
+                toastr["error"](JSON.parse(error.responseText).message)
+            }
+        })
+    }
 
 
 </script>

@@ -112,7 +112,7 @@
                                     <label for="datepicker2" class="col-md-4 col-form-label">Date Inspected:</label>
                                     <div class="col-md-8 mb-3">
                                         <div class="input-group" id="datepicker2">
-                                            <input type="text" class="form-control" name="date_inspected" id="date_inspected" placeholder="Select date"
+                                            <input type="text" class="form-control" name="inspection_date" id="inspection_date" placeholder="Select date"
                                                 data-date-format="yyyy-mm-dd" data-date-container='#datepicker2' data-provide="datepicker"
                                                 data-date-autoclose="true" required>
 
@@ -255,7 +255,9 @@
         });
     })
 
-    $('#po_date').datepicker('setDate', 'today');
+    $('#iar_date').datepicker('setDate', 'today');
+    $('#inspection_date').datepicker('setDate', 'today');
+    $('#date_received').datepicker('setDate', 'today');
 
     $('#po_id').on('change',function (){
         const id = $(this).val();
@@ -273,12 +275,13 @@
                 let markup = '';
                 let i = 0;
                 order.forEach(o => {
+                    console.log(o)
                     i += 1;
                     if(o.item == null) {
                         markup += `<tr>
                                         <td width="180px">`+i+`</td>
                                         <td>`+o.unit_of_measure+`</td>
-                                        <td>`+o.item_description+`</td>
+                                        <td><h6>`+o.item_name+`</h6><span>`+o.item_description+`</span></td>
                                         <td><input type="number" name=qty_received[] value="`+o.quantity+`" class="form-control" required></td>
                                         <td><input type="text" name="type[]" class="form-control"></td>
                                         <td><input type="text" name="model[]" class="form-control"></td>
@@ -289,7 +292,7 @@
                         markup += `<tr>
                                         <td width="180px">`+i+`</td>
                                         <td>`+o.unit_of_measure+`</td>
-                                        <td>`+o.description+`</td>
+                                        <td><h6>`+o.item_name+`</h6><span>`+o.item.description+`</span></td>
                                         <td><input type="number" name=qty_received[] value="`+o.quantity+`" class="form-control" required></td>
                                         <td><input type="text" name="type[]" class="form-control"></td>
                                         <td><input type="text" name="model[]" class="form-control"></td>

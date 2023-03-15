@@ -185,13 +185,13 @@
                             Department :
                         </div>
                         <div class="col-4 border-1 border-bottom">
-                           {{$pr->name}}
+                           {{ $pr->office }}
                         </div>
                         <div class="col-1">
                             PR No.:
                         </div>
                         <div class="col-2 border-1 border-bottom">
-                            {{$pr->pr_no}}
+                            {{ $pr->pr_no }}
                         </div>
                         <div class="col-1">
                             Date:
@@ -265,33 +265,35 @@
                                     </tr>
                                  @endfor
                             <tr>
-                                <td colspan = "4" class="text-center">
-                                CHARGES: {{$pr->charges_for}}
+                                <td colspan="4" class="text-left">
+                                <span class="fw-bold">CHARGES:</span> {{$pr->charges_for}}
                                 </td>
                                 <td><b>Total</b></td>
                                 <td><b></b></td>
                             </tr>
                             <tr>
-                                <td colspan = "6" class="text-left">
-                                 <b>Purpose/Remarks:</b> For the conduct of Youth Sportfest Celebration featuring Larong Pinoy
+                                <td colspan="6" class="text-left">
+                                 <b>Purpose/Remarks:</b> {{ $pr->purpose }}
                                 </td>
                             </tr>
                             <tr>
-                              <td colspan = "2"></td>
+                              <td colspan="2"></td>
                               <td>Requested by:</td>
-                              <td colspan = "3">Approved by:</td>
+                              <td colspan="3">Approved by:</td>
                             </tr>
                             <tr  style="height:50px;">
-                              <td colspan="6" style="vertical-align:middle;">Signature:</td>
+                              <td colspan="2" style="vertical-align:middle;">Signature:</td>
+                              <td></td>
+                              <td colspan="3"></td>
                             </tr>
                             <tr>
                               <td colspan="2">Printed Name:</td>
-                              <td>THELMA F. BANAL</td>
-                              <td colspan="3">HON. MARIA FE R. ABUNDA</td>
+                              <td class="text-capitalize">{{ $pr->requisitioner }}</td>
+                              <td colspan="3">{{ config('constants.approval.purchase_request')}}</td>
                             </tr>
                             <tr>
                               <td colspan="2">Designation:</td>
-                              <td class="text-capitalize">City Social Welfare and Developement Officer</td>
+                              <td class="text-capitalize">{{ $pr->office }}</td>
                               <td colspan="3">City Mayor</td>
                             </tr>
                             <tr>

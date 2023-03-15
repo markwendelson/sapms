@@ -21,4 +21,14 @@ class InspectionAcceptance extends Model
         // return $this->belongsTo(User::class, 'created_by', 'id');
         return $this->hasOne(User::class, 'id', 'created_by');
     }
+
+    public function purchase_order()
+    {
+        return $this->belongsTo(PurchaseOrder::class, 'po_id', 'id');
+    }
+
+    public function office()
+    {
+        return $this->hasOne(Office::class, 'id', 'office_id');
+    }
 }

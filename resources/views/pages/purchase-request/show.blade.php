@@ -24,12 +24,18 @@
 
             <div class="page-title-right">
                 {{-- {{route('purchase-request.edit', $pr->id)}} --}}
+                @if(auth()->user()->hasDirectPermission('edit-purchase-request') && $pr->allow_edit)
                 <a href="#" class="btn btn-info waves-effect waves-light">
                     <i class="bx bx-edit font-size-16 align-middle me-2"></i> Edit
                 </a>
+                @endif
+
+                @if(auth()->user()->hasDirectPermission('delete-purchase-request'))
                 <a href="#" class="btn btn-danger waves-effect waves-light">
                     <i class="bx bx-trash font-size-16 align-middle me-2"></i> Delete
                 </a>
+                @endif
+
                 <a href="javascript:void(0)" onclick="printPage('{{route('reports.pr', ['id' => $pr->id])}}');" class="btn btn-primary waves-effect waves-light">
                     <i class="bx bx-printer font-size-16 align-middle me-2"></i> Print
                 </a>
@@ -83,7 +89,7 @@
                                     @foreach ($pr->details as $key => $item)
                                         <tr>
                                             <td>{{$key+1}}</td>
-                                            <td></td>
+                                            <td>{{$item->unit_of_measure}}</td>
                                             <td>
                                                 <p class="mb-1">{{$item->item_name}}</p>
                                                 <p>{{$item->item_description}}</p>
@@ -108,7 +114,7 @@
                                 <tbody>
                                     <tr>
                                         <td>Charges:</td>
-                                        <td>{{$pr->charge_for}}</td>
+                                        <td>{{$pr->charges_for}}</td>
                                     </tr>
                                     <tr>
                                         <td style="width:100px">Purpose/Remarks:</td>

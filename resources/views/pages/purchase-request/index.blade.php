@@ -60,7 +60,9 @@
 @push('scripts')
 <script>
     $(document).ready(function() {
-        $('#datatable').DataTable();
+        $('#datatable').DataTable({
+            "aaSorting": []
+        });
     });
 </script>
 @endpush

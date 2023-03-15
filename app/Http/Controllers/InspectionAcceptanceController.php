@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\PurchaseOrder;
 use App\Models\InspectionAcceptance;
 use App\Http\Requests\InspectionAcceptanceRequest;
+use App\Functions\Helpers;
 
 class InspectionAcceptanceController extends Controller
 {
@@ -17,7 +18,8 @@ class InspectionAcceptanceController extends Controller
 
     public function show($id)
     {
-        $iar = InspectionAcceptance::with(['details','createdBy'])->where('id',$id)->first();
+        $iar = InspectionAcceptance::with(['details','createdBy'])->where('id',$id)->firstOrFail();
+        // dd($iar->purchase_order);
         return view('pages.inspection-acceptance.show', compact('iar'));
     }
 
@@ -64,6 +66,7 @@ class InspectionAcceptanceController extends Controller
 
         // iterate iar_items
         $iar_details = [];
+        $new_items_arr = [];
         foreach ($po->details as $key => $item) {
             $iar_details[$key]['iar_id'] = $iar->id;
             $iar_details[$key]['item_id'] = $item->item_id;
@@ -73,11 +76,31 @@ class InspectionAcceptanceController extends Controller
             $iar_details[$key]['quantity_received'] = $quantity_received[$key];
             $iar_details[$key]['unit_cost'] = $item->unit_cost;
             $iar_details[$key]['unit_of_measure'] = $item->unit_of_measure;
+
+            // if ($item->item_id == '' && $item->quantity == 1) {
+            //     $new_items_arr[$key]['code'] = Helpers::generateItemCode();
+            //     $new_items_arr[$key]['name'] = $item->name;
+            //     $new_items_arr[$key]['description'] = $item->item_description;
+            //     $new_items_arr[$key]['quantity'] = $item->quantity;
+            //     $new_items_arr[$key]['unit_of_measure'] = $item->unit_of_measure;
+            //     $new_items_arr[$key]['price'] = $item->unit_cost;
+            //     // $new_items_arr[$key]['category'] = $request->category;
+            //     // $new_items_arr[$key]['useful_life'] = $request->useful_life;
+            //     // $new_items_arr[$key]['fixed_asset'] = $request->fixed_asset;
+            //     $new_items_arr[$key]['date_acquired'] = $request->date_received;
+            //     $new_items_arr[$key]['type'] = $item->type;
+            //     $new_items_arr[$key]['brand'] = $item->brand;
+            //     $new_items_arr[$key]['model'] = $item->model;
+            //     $new_items_arr[$key]['serial_no'] = $item->serial_no;
+
+            // } elseif ($item->item_id == '' && $item->quantity > 1) {
+            //     if()
+            // }
         }
 
         \DB::table('inspection_and_acceptance_details')->insert($iar_details);
 
-        return redirect()->route('insection-and-acceptancep.show', $iar->id)->with('message', 'Inspection and Acceptance successfuly saved.');
+        return redirect()->route('inspection-and-acceptance.show', $iar->id)->with('message', 'Inspection and Acceptance successfuly saved.');
     }
 
 }

@@ -24,12 +24,40 @@
 
             <div class="page-title-right">
                 {{-- {{route('purchase-request.edit', $po->id)}} --}}
+                @if(auth()->user()->hasDirectPermission('edit-purchase-order') && $po->allow_edit)
                 <a href="#" class="btn btn-info waves-effect waves-light">
                     <i class="bx bx-edit font-size-16 align-middle me-2"></i> Edit
                 </a>
-                <a href="#" class="btn btn-danger waves-effect waves-light">
-                    <i class="bx bx-trash font-size-16 align-middle me-2"></i> Delete
-                </a>
+                @endif
+
+                @if(auth()->user()->hasDirectPermission('delete-purchase-order'))
+                    <a href="#" class="btn btn-danger waves-effect waves-light">
+                        <i class="bx bx-trash font-size-16 align-middle me-2"></i> Delete
+                    </a>
+                @endif
+
+                @role('super-admin|admin')
+                    @if($po->allow_edit)
+                    <a href="#" class="btn btn-info waves-effect waves-light">
+                        <i class="bx bx-edit font-size-16 align-middle me-2"></i> Disable Editing
+                    </a>
+                    @else
+                    <a href="#" class="btn btn-info waves-effect waves-light">
+                        <i class="bx bx-edit font-size-16 align-middle me-2"></i> Enable Editing
+                    </a>
+                    @endif
+
+                    @if($po->allow_edit)
+                    <a href="#" class="btn btn-info waves-effect waves-light">
+                        <i class="bx bx-edit font-size-16 align-middle me-2" {{ $po->allow_edit}}></i> Edit
+                    </a>
+                    @endif
+
+                    <a href="#" class="btn btn-danger waves-effect waves-light">
+                        <i class="bx bx-trash font-size-16 align-middle me-2"></i> Delete
+                    </a>
+                @endrole
+
                 <a href="javascript:void(0)" onclick="printPage('{{route('reports.po', ['id' => $po->id])}}');" class="btn btn-primary waves-effect waves-light">
                     <i class="bx bx-printer font-size-16 align-middle me-2"></i> Print
                 </a>
